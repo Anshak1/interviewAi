@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
-const BACKEND_URL = "http://localhost:3001";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
 
 export function Form() {
     const [github, setGithub] = useState("");
@@ -93,10 +93,11 @@ export function Form() {
                         value={github}
                         onChange={(e) => setGithub(e.target.value)}
                         onKeyDown={(e) => {
-                            if (e.key === "Enter") {
+                            if (e.key === "Enter" && !loading) {
                                 submit();
                             }
                         }}
+                        disabled={loading}
                     />
 
                     <p className="text-xs text-slate-500 mt-2">
