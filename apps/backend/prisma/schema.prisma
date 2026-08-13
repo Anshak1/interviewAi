@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Interview {
+  id            String         @id @default(cuid())
+  status        Status         @default(pre)
+  score         Int?
+  feedback      String?
+  meatadata     Json
+  conversations Conversation[]
+}
+
+model Conversation {
+  id          String    @id @default(cuid())
+  who         who
+  message     String
+  createdAt   DateTime  @default(now())
+  interviewId String
+  interview   Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+}
+
+enum Status {
+  pre
+  processing
+  done
+}
+
+enum who {
+  model
+  person
+}
