@@ -1,159 +1,256 @@
-# Turborepo starter
+AI Interview Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+An AI-powered interview platform that conducts technical interviews, evaluates candidate responses, and provides a performance score.
 
-## Using this example
+🚀 Features
 
-Run the following command:
+* 🤖 AI-powered interviews
+* 💬 Interactive interview experience
+* 🧠 Automatic evaluation and scoring
+* 💻 Coding problem submissions
+* ⚡ Redis-based job queue
+* 🔧 Background worker for code execution
+* 🗄️ PostgreSQL database with Prisma ORM
+* 🔐 Express.js backend API
+* ⚛️ React frontend
 
-```sh
-npx create-turbo@latest
-```
+🏗️ Architecture
 
-## What's inside?
+React Frontend
+      │
+      │ HTTP API
+      ▼
+Express Backend
+      │
+      ├──────────────► PostgreSQL
+      │                  │
+      │                Prisma
+      │
+      └──────────────► Redis Queue
+                           │
+                           ▼
+                         Worker
+                           │
+                           ▼
+                  Code Execution
 
-This Turborepo includes the following packages/apps:
+🛠️ Tech Stack
 
-### Apps and Packages
+Frontend
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+* React
+* TypeScript
+* Vite
+* shadcn/ui
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Backend
 
-### Utilities
+* Node.js
+* Express.js
+* TypeScript
+* Prisma
+* PostgreSQL
 
-This Turborepo has some additional tools already setup for you:
+Infrastructure
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+* Redis
+* Background workers
+* Docker/sandboxed code execution
 
-### Build
+📁 Project Structure
 
-To build all apps and packages, run the following command:
+project/
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+│
+├── backend/
+│   ├── src/
+│   ├── prisma/
+│   ├── package.json
+│   └── ...
+│
+├── worker/
+│   ├── src/
+│   ├── code/
+│   └── ...
+│
+└── README.md
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+⚙️ Getting Started
 
-```sh
-cd my-turborepo
-turbo build
-```
+1. Clone the repository
 
-Without global `turbo`, use your package manager:
+git clone <your-repository-url>
+cd <project-directory>
 
-```sh
-cd my-turborepo
-npx turbo build
-bun dlx turbo build
-bun exec turbo build
-```
+2. Install dependencies
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Install dependencies for each service:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+cd frontend
+npm install
+cd ../backend
+npm install
+cd ../worker
+npm install
 
-```sh
-turbo build --filter=docs
-```
+🔐 Environment Variables
 
-Without global `turbo`:
+Backend
 
-```sh
-npx turbo build --filter=docs
-bun exec turbo build --filter=docs
-bun exec turbo build --filter=docs
-```
+Create a .env file in the backend:
 
-### Develop
+PORT=3000
+DATABASE_URL="your-postgresql-connection-string"
+REDIS_URL="your-redis-connection-string"
+FRONTEND_URL="http://localhost:5173"
 
-To develop all apps and packages, run the following command:
+Frontend
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Create a .env file:
 
-```sh
-cd my-turborepo
-turbo dev
-```
+VITE_API_URL="http://localhost:3000"
 
-Without global `turbo`, use your package manager:
+Never commit .env files or API keys to GitHub.
 
-```sh
-cd my-turborepo
-npx turbo dev
-bun exec turbo dev
-bun exec turbo dev
-```
+🗄️ Database Setup
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Run Prisma migrations:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+npx prisma migrate dev
 
-```sh
-turbo dev --filter=web
-```
+Generate the Prisma client:
 
-Without global `turbo`:
+npx prisma generate
 
-```sh
-npx turbo dev --filter=web
-bun exec turbo dev --filter=web
-bun exec turbo dev --filter=web
-```
+For production deployments, use:
 
-### Remote Caching
+npx prisma migrate deploy
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+▶️ Running Locally
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Start the frontend
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+cd frontend
+npm run dev
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+The frontend will usually run on:
 
-```sh
-cd my-turborepo
-turbo login
-```
+http://localhost:5173
 
-Without global `turbo`, use your package manager:
+Start the backend
 
-```sh
-cd my-turborepo
-npx turbo login
-bun exec turbo login
-bun exec turbo login
-```
+cd backend
+npm run dev
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Start the worker
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+cd worker
+npm run dev
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+The application should now be available locally.
 
-```sh
-turbo link
-```
+🔄 Submission Flow
 
-Without global `turbo`:
+When a candidate submits code:
 
-```sh
-npx turbo link
-bun exec turbo link
-bun exec turbo link
-```
+Candidate
+   │
+   ▼
+React Frontend
+   │
+   ▼
+Express API
+   │
+   ├── Save submission
+   │
+   └── Push job to Redis
+             │
+             ▼
+           Worker
+             │
+             ├── Get submission
+             ├── Compile code
+             ├── Execute code
+             ├── Capture output
+             └── Update submission status
 
-## Useful Links
+🚀 Deployment
 
-Learn more about the power of Turborepo:
+The recommended production setup is:
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Service	Recommended Platform
+React frontend	Vercel
+Express API	Render / Railway
+PostgreSQL	Neon / Supabase / Railway
+Redis	Upstash
+Worker	Render / Railway / dedicated server
+
+Frontend
+
+Build the React application:
+
+npm run build
+
+Deploy the generated dist directory.
+
+Backend
+
+The backend should listen on the port supplied by the hosting platform:
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
+
+Worker
+
+Deploy the worker as a separate service/process from the Express API.
+
+Web Service
+    │
+    ▼
+Express API
+    │
+    ▼
+Redis
+    │
+    ▼
+Worker Service
+
+⚠️ Security
+
+Because this platform executes user-submitted code, code execution must be isolated.
+
+Production execution should have restrictions on:
+
+* CPU usage
+* Memory usage
+* Execution time
+* Filesystem access
+* Network access
+* Process creation
+* User permissions
+
+Do not execute arbitrary user code directly on the host machine.
+
+📌 Future Improvements
+
+* Authentication
+* Interview history
+* Detailed candidate reports
+* AI-generated interview questions
+* Difficulty-based questions
+* Code execution sandbox
+* Real-time interview feedback
+* Leaderboard
+* Admin dashboard
+* Docker-based isolated execution
+* Production monitoring and logging
+
+📄 License
+
+This project is currently for educational and development purposes.
