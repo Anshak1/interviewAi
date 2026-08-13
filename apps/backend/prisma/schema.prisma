@@ -12,7 +12,7 @@ model Interview {
   status        Status         @default(pre)
   score         Int?
   feedback      String?
-  meatadata     Json
+  metadata     Json
   conversations Conversation[]
 }
 
